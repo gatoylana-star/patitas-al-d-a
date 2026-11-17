@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Patitas al día</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8F1F5;--card:#FFFFFF;--ink:#14323F;--muted:#4E6B78;--line:#C9DAE2;--brand:#1F7A8C;--brand-ink:#FFFFFF;--collar:#F2B632;--alert:#C8421F;--alert-bg:#FCE6DE;--soon-bg:#FFF2CC;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F2229;--card:#173039;--ink:#E6F2F6;--muted:#9FBAC5;--line:#2A4753;--brand:#4FB3C7;--brand-ink:#0F2229;--collar:#F2B632;--alert:#FF8A66;--alert-bg:#3B2420;--soon-bg:#3A3217;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F2229;--card:#173039;--ink:#E6F2F6;--muted:#9FBAC5;--line:#2A4753;--brand:#4FB3C7;--brand-ink:#0F2229;--alert:#FF8A66;--alert-bg:#3B2420;--soon-bg:#3A3217;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;line-height:1.5;font-size:16px}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Baloo 2","Trebuchet MS",sans-serif;margin:0;line-height:1.1}
+h1{font-size:2.4rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.sub{color:var(--muted);margin:4px 0 18px}
+.collar{height:10px;border-radius:6px;margin:0 0 18px;background:repeating-linear-gradient(90deg,var(--collar) 0 18px,var(--brand) 18px 36px)}
+.next{background:var(--brand);color:var(--brand-ink);border-radius:18px;padding:18px 20px;margin-bottom:16px}
+.next small{display:block;opacity:.85;font-weight:700}
+.next strong{font-family:"Baloo 2",sans-serif;font-size:1.5rem;font-weight:800;line-height:1.2}
+.banner{background:var(--alert-bg);border:2px solid var(--alert);color:var(--ink);border-radius:14px;padding:12px 16px;margin-bottom:16px}
+.banner b{color:var(--alert)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+label{display:block;font-weight:700;font-size:.9rem;margin:10px 0 4px}
+input,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--collar);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:end}
+@media(max-width:480px){.row{grid-template-columns:1fr}}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;border:0;min-height:44px;padding:0 16px}
+.btn{background:var(--brand);color:var(--brand-ink);margin-top:14px;width:100%}
+.ghost{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 12px;font-weight:700}
+.chip button{min-height:28px;padding:0 8px;background:transparent;color:var(--muted);font-size:1rem}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--brand);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.item.soon{border-left-color:var(--collar);background:var(--soon-bg)}
+.item.late{border-left-color:var(--alert);background:var(--alert-bg)}
+.ico{font-size:1.8rem;line-height:1}
+.t{font-weight:800}
+.m{color:var(--muted);font-size:.9rem}
+.tag{display:inline-block;font-weight:800;font-size:.8rem;border-radius:6px;padding:0 6px;background:var(--line);color:var(--ink);margin-right:6px}
+.late .tag{background:var(--alert);color:#fff}
+.soon .tag{background:var(--collar);color:#14323F}
+.acts{display:flex;flex-direction:column;gap:6px}
+.acts button{min-height:38px;font-size:.9rem}
+.ok{background:var(--brand);color:var(--brand-ink)}
+.del{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.empty{text-align:center;color:var(--muted);padding:20px 8px}
+.note{font-size:.85rem;color:var(--muted);margin-top:10px}
+@media(prefers-reduced-motion:no-preference){.item,.next{transition:background .2s}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Patitas al día</h1>
+  <p class="sub">Recordatorios para la comida, el veterinario y las medicinas de tus mascotas.</p>
+  <div class="collar" aria-hidden="true"></div>
+
+  <div id="banner"></div>
+  <div id="next"></div>
+
+  <section class="panel" aria-labelledby="h-pets">
+    <h2 id="h-pets">Mis mascotas</h2>
+    <div class="row3">
+      <div><label for="pname">Nombre</label><input id="pname" maxlength="24" placeholder="Ej. Luna"></div>
+      <div><label for="pemoji">Animal</label>
+        <select id="pemoji"><option>🐶</option><option>🐱</option><option>🐰</option><option>🐹</option><option>🐦</option><option>🐢</option><option>🐟</option></select></div>
+    </div>
+    <button class="btn ghost" id="addPet" type="button">Agregar mascota</button>
+    <div class="chips" id="pets"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-new">
+    <h2 id="h-new">Nuevo recordatorio</h2>
+    <div class="row">
+      <div><label for="rpet">Mascota</label><select id="rpet"></select></div>
+      <div><label for="rkind">Qué toca</label>
+        <select id="rkind"><option value="comida">🍖 Comida</option><option value="vet">🩺 Visita al veterinario</option><option value="medicina">💊 Medicina</option></select></div>
+    </div>
+    <label for="rnote">Detalle (opcional)</label>
+    <input id="rnote" maxlength="60" placeholder="Ej. 1 taza de croquetas, vacuna anual, 5 ml de jarabe">
+    <div class="row">
+      <div><label for="rwhen">Fecha y hora</label><input id="rwhen" type="datetime-local"></div>
+      <div><label for="rrep">Repetir</label>
+        <select id="rrep"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option></select></div>
+    </div>
+    <button class="btn" id="addRem" type="button">Guardar recordatorio</button>
+    <p id="msg" class="note" role="status"></p>
+  </section>
+
+  <section aria-labelledby="h-list">
+    <h2 id="h-list">Próximos recordatorios</h2>
+    <div id="list"></div>
+    <button class="ghost" id="notif" type="button" style="width:100%">Activar avisos del navegador</button>
+    <p class="note">Los avisos suenan solo mientras esta página esté abierta. Tus datos se guardan en este dispositivo.</p>
+  </section>
+</main>
+
+<script>
+(function(){
+var K="patitas-al-dia-v1", S={pets:[],rem:[]}, notified={};
+var KIND={comida:{i:"🍖",n:"Comida"},vet:{i:"🩺",n:"Veterinario"},medicina:{i:"💊",n:"Medicina"}};
+var $=function(id){return document.getElementById(id)};
+function load(){try{var r=localStorage.getItem(K);if(r)S=JSON.parse(r)}catch(e){}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function uid(){return Math.random().toString(36).slice(2,9)}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function pet(id){return S.pets.filter(function(p){return p.id===id})[0]}
+function rel(ms){
+  var d=ms-Date.now(),a=Math.abs(d),m=Math.round(a/60000),t;
+  if(m<1)return "ahora";
+  if(m<60)t=m+" min";
+  else if(m<1440){var h=Math.floor(m/60),r=m%60;t=h+" h"+(r?" "+r+" min":"")}
+  else{var dd=Math.floor(m/1440);t=dd+(dd===1?" día":" días")}
+  return d<0?"hace "+t:"en "+t;
+}
+function fmt(ms){return new Date(ms).toLocaleString("es-MX",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}
+function status(r){var d=r.when-Date.now();return d<=0?"late":d<=3600000?"soon":"ok"}
+function label(r){var p=pet(r.petId);return (p?p.emoji+" "+p.name:"Mascota")+" · "+KIND[r.kind].n}
+
+function render(){
+  var pc=$("pets"),sel=$("rpet");
+  pc.innerHTML=S.pets.length?"":'<span class="m">Aún no hay mascotas. Agrega la primera arriba.</span>';
+  S.pets.forEach(function(p){
+    var c=document.createElement("span");c.className="chip";
+    c.innerHTML=p.emoji+" "+esc(p.name)+'<button type="button" aria-label="Quitar a '+esc(p.name)+'" data-p="'+p.id+'">✕</button>';
+    pc.appendChild(c);
+  });
+  var cur=sel.value;
+  sel.innerHTML=S.pets.map(function(p){return '<option value="'+p.id+'">'+p.emoji+" "+esc(p.name)+"</option>"}).join("")||'<option value="">Primero agrega una mascota</option>';
+  if(cur)sel.value=cur;
+
+  var rs=S.rem.slice().sort(function(a,b){return a.when-b.when}),L=$("list");
+  if(!rs.length){
+    L.innerHTML='<div class="empty">Todavía no tienes recordatorios.<br>Agrega uno arriba o <button class="ghost" id="demo" type="button">carga un ejemplo</button></div>';
+  }else{
+    L.innerHTML=rs.map(function(r){
+      var s=status(r),tag=s==="late"?"Atrasado":s==="soon"?"Pronto":"";
+      return '<div class="item '+s+'"><div class="ico" aria-hidden="true">'+KIND[r.kind].i+'</div><div><div class="t">'+esc(label(r))+'</div>'+
+        '<div class="m">'+(tag?'<span class="tag">'+tag+'</span>':"")+rel(r.when)+" · "+fmt(r.when)+(r.repeat!=="none"?" · se repite":"")+'</div>'+
+        (r.note?'<div class="m">'+esc(r.note)+"</div>":"")+'</div>'+
+        '<div class="acts"><button class="ok" data-d="'+r.id+'" type="button">Hecho</button><button class="del" data-x="'+r.id+'" type="button">Borrar</button></div></div>';
+    }).join("");
+  }
+  var n=$("next"),b=$("banner");
+  if(rs.length){var f=rs[0];n.innerHTML='<div class="next"><small>Lo siguiente</small><strong>'+esc(label(f))+" — "+rel(f.when)+"</strong></div>"}else n.innerHTML="";
+  var due=rs.filter(function(r){return r.when-Date.now()<=900000});
+  b.innerHTML=due.length?'<div class="banner" role="alert"><b>Atención:</b> '+due.map(function(r){return esc(label(r))+" ("+rel(r.when)+")"}).join("; ")+".</div>":"";
+}
+
+function notify(){
+  try{
+    if(!("Notification" in window)||Notification.permission!=="granted")return;
+    S.rem.forEach(function(r){
+      if(r.when<=Date.now()&&notified[r.id+"_"+r.when]!==1){
+        notified[r.id+"_"+r.when]=1;
+        new Notification("Patitas al día",{body:label(r)+(r.note?": "+r.note:"")});
+      }
+    });
+  }catch(e){}
+}
+function say(t){$("msg").textContent=t}
+
+$("addPet").onclick=function(){
+  var n=$("pname").value.trim();
+  if(!n){$("pname").focus();return}
+  S.pets.push({id:uid(),name:n,emoji:$("pemoji").value});
+  $("pname").value="";save();render();
+};
+$("pets").onclick=function(e){
+  var id=e.target.getAttribute("data-p");if(!id)return;
+  S.pets=S.pets.filter(function(p){return p.id!==id});
+  S.rem=S.rem.filter(function(r){return r.petId!==id});
+  save();render();
+};
+$("addRem").onclick=function(){
+  var pid=$("rpet").value,w=$("rwhen").value;
+  if(!pid){say("Primero agrega una mascota.");return}
+  if(!w){say("Elige la fecha y la hora.");return}
+  S.rem.push({id:uid(),petId:pid,kind:$("rkind").value,note:$("rnote").value.trim(),when:new Date(w).getTime(),repeat:$("rrep").value});
+  $("rnote").value="";save();render();say("Recordatorio guardado.");
+};
+$("list").onclick=function(e){
+  var t=e.target,d=t.getAttribute("data-d"),x=t.getAttribute("data-x");
+  if(t.id==="demo"){demo();return}
+  if(d){
+    var r=S.rem.filter(function(i){return i.id===d})[0];
+    if(r.repeat==="none"){S.rem=S.rem.filter(function(i){return i.id!==d})}
+    else{var st=r.repeat==="daily"?864e5:6048e5;r.when+=st;while(r.when<=Date.now())r.when+=st}
+  }
+  if(x)S.rem=S.rem.filter(function(i){return i.id!==x});
+  save();render();
+};
+$("notif").onclick=function(){
+  try{Notification.requestPermission().then(function(p){$("notif").textContent=p==="granted"?"Avisos activados":"Avisos bloqueados por el navegador"})}
+  catch(e){$("notif").textContent="Tu navegador no permite avisos"}
+};
+function demo(){
+  var a=uid(),b=uid(),n=Date.now();
+  S.pets=[{id:a,name:"Luna",emoji:"🐶"},{id:b,name:"Miso",emoji:"🐱"}];
+  S.rem=[
+    {id:uid(),petId:a,kind:"comida",note:"1 taza de croquetas",when:n+25*60000,repeat:"daily"},
+    {id:uid(),petId:b,kind:"medicina",note:"5 ml de jarabe",when:n+3*3600000,repeat:"daily"},
+    {id:uid(),petId:a,kind:"vet",note:"Vacuna anual",when:n+3*864e5,repeat:"none"},
+    {id:uid(),petId:b,kind:"comida",note:"Lata de pollo",when:n-10*60000,repeat:"daily"}
+  ];
+  save();render();
+}
+function defWhen(){
+  var d=new Date(Date.now()+3600000);d.setMinutes(0,0,0);
+  var p=function(x){return String(x).padStart(2,"0")};
+  $("rwhen").value=d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());
+}
+load();defWhen();render();notify();
+setInterval(function(){render();notify()},30000);
+})();
+</script>
+</body>
+</html>
